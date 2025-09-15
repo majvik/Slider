@@ -1017,7 +1017,7 @@ function setupDesktopDrag(){
 
 function clearDesktopDrag() {
   // Удаляем все drag обработчики
-  desktopDragHandlers.forEach(({ element, event, handler }) => {
+  (Array.isArray(desktopDragHandlers) ? desktopDragHandlers : []).forEach(({ element, event, handler }) => {
     if (element && element.removeEventListener) {
       element.removeEventListener(event, handler);
     }
@@ -1109,7 +1109,7 @@ function setupMobileTouch(){
 
 function clearMobileTouch() {
   // Удаляем все touch обработчики
-  mobileTouchHandlers.forEach(({ element, event, handler, options }) => {
+  (Array.isArray(mobileTouchHandlers) ? mobileTouchHandlers : []).forEach(({ element, event, handler, options }) => {
     if (element && element.removeEventListener) {
       element.removeEventListener(event, handler, options);
     }
