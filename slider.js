@@ -933,7 +933,7 @@ function handleWheelHorizontal(dyPlanned, isTP){
 }
 
 // === ПЕРЕТАСКИВАНИЕ МЫШЬЮ (ТОЛЬКО ДЛЯ ДЕСКТОПА) ===
-let desktopDragHandlers = [];
+var desktopDragHandlers = [];
 
 function setupDesktopDrag(){
   if (!sliderWrapper) return; // выходим если нет обертки слайдера
@@ -1031,7 +1031,7 @@ function clearDesktopDrag() {
 }
 
 // === КАСАНИЯ НА МОБИЛЬНЫХ УСТРОЙСТВАХ ===
-let mobileTouchHandlers = [];
+var mobileTouchHandlers = [];
 
 function setupMobileTouch(){
   if (!sliderWrapper) return;
