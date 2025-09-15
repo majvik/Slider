@@ -645,7 +645,7 @@ function approachToSection(align /* 'start' | 'end' */) {
 }
 
 // === ОБРАБОТКА КОЛЕСА МЫШИ (всплывающие события) ===
-let wheelHandler = null;
+var wheelHandler = null;
 
 function setupWheel(){
   if (isMobile) return; // пропускаем на мобильных устройствах
