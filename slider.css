@@ -1,0 +1,308 @@
+/* --- Scoped styles for the embedded slider --- */
+#wsls{
+  /* Переменные для плавности анимаций */
+  --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-normal: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --easing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+#wsls html, #wsls body{ scroll-snap-type: none; overscroll-behavior-y: contain; }
+#wsls html, #wsls body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #f5f5f5;
+}
+#wsls /* Скрытие стандартного скроллбара */
+html::-webkit-scrollbar, #wsls body::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+#wsls html::-webkit-scrollbar-track, #wsls body::-webkit-scrollbar-track{
+  background: transparent;
+}
+#wsls html::-webkit-scrollbar-thumb, #wsls body::-webkit-scrollbar-thumb{
+  background: transparent;
+}
+#wsls /* Для Firefox */
+html{
+  scrollbar-width: none;
+}
+#wsls body{
+  scrollbar-width: none;
+}
+#wsls /* Для IE и Edge */
+html{
+  -ms-overflow-style: none;
+}
+#wsls body{
+  -ms-overflow-style: none;
+}
+#wsls > p, #wsls h1, #wsls h2, #wsls h3, #wsls h4, #wsls h5, #wsls h6, #wsls span, #wsls a, #wsls li{
+  color: black;
+}
+#wsls .main-container{
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+  position: relative;
+}
+#wsls /* Общие секции */
+.intro, #wsls .after{
+  min-height: 1500px;
+  padding: 4rem 2rem;
+  background: #e7efff;
+}
+#wsls /* Слайдер */
+.slider-section{
+  overflow: hidden;
+  position: relative;
+}
+#wsls .slider-section{ height: 100svh; min-height: 100vh; transition: none; }
+#wsls .slider-section > *:first-child{ margin-top: 0; }/* на случай collapsing margins */
+
+/* Десктоп: слайдер остается на месте, но заполняет весь экран */
+@media (min-width: 769px){
+  #wsls .slider-section.slider-active {
+    /* НЕ меняем position - остается relative */
+    /* НЕ меняем top/left - остается на своем месте */
+    width: 100% !important;
+    height: 100vh !important;
+    z-index: 1000 !important;
+    /* Добавляем тень или границу для визуального выделения */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    /* Плавная анимация активации */
+    transition: all var(--transition-slow);
+  }
+}
+#wsls .slider{
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* изменено с visible на hidden для корректного отображения */
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* Разрешаем вертикальную прокрутку браузером поверх слайдера */
+  touch-action: pan-y;
+  padding-left: 600px; /* обеспечиваем видимость слайдов справа от колонки */
+  padding-right: 200px; /* увеличиваем отступ справа чтобы последний слайд был виден полностью */
+  z-index: 1; /* слайды под колонкой */
+}
+#wsls .slider-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px; /* минимальная ширина колонки */
+  height: 100%;
+  pointer-events: none; /* клик сквозь */
+  display: flex;
+  align-items: stretch;
+  z-index: 2; /* колонка поверх слайдов */
+}
+#wsls .overlay-inner{
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto 1fr; /* верх, центр(svg), низ */
+  align-items: center;
+  justify-items: start; /* всё по левому краю */
+  padding: 32px 24px; /* внутренние отступы */
+}
+#wsls .overlay-top{
+  align-self: start;
+  justify-self: start;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+#wsls .overlay-center{ align-self: center; justify-self: start; }
+#wsls .overlay-center svg{ display: block; }
+#wsls .overlay-bottom{
+  align-self: end;
+  justify-self: start;
+  font-size: 14px;
+  text-decoration: none;
+  pointer-events: auto; /* ссылка кликабельна, несмотря на наложение */
+}
+#wsls /* Мобильный заголовок и ссылка (видимы только на мобиле) */
+.slider-heading, #wsls .slider-all-link{
+  display: none;
+}
+#wsls .slider-track{
+  position: relative;
+  width: max-content;
+  will-change: transform;
+  /* Плавная анимация для трека */
+  transition: transform var(--transition-fast);
+}
+#wsls .slider-wrapper{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  padding: 0 0; /* убираем 600px паддинг, теперь колонка наложением */
+  width: max-content;
+  cursor: grab;
+  /* Плавные переходы для wrapper */
+  transition: all var(--transition-fast);
+}
+#wsls /* Добавляем правый отступ для последнего слайда, #wsls равный gap между слайдами */
+.slider-wrapper .slide:last-child{
+  margin-right: 100px;
+}
+#wsls .slide{
+  width: 400px;
+  height: auto;           /* высота по содержимому на десктопе */
+  background: transparent;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Плавные переходы для слайдов */
+  transition: all var(--transition-normal);
+  transform-origin: center center;
+  transform: translate3d(0,0,0);
+}
+#wsls .slide img{
+  display: block;
+  width: 100%;
+  height: auto;          /* сохраняет пропорции на десктопе */
+  object-fit: contain;
+  aspect-ratio: 3 / 2;   /* запасной вариант до загрузки, чтобы не было узкой полосы */
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+}
+#wsls /* Центрирование изображения внутри доступной высоты (пропорциональное масштабирование) */
+.slide-media{
+  width: min(380px, 100%);
+  aspect-ratio: 3 / 4; /* контейнер 3:4 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 8px; /* отступ снизу для Artist name */
+}
+#wsls .slide-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* изображения 3:4, как cover */
+}
+#wsls /* подписи к слайдам — десктоп */
+.slide-meta-top, #wsls .slide-meta-bottom{
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: left;
+  width: 100%;
+}
+#wsls .slide-meta-top{ margin-bottom: 8px; }
+#wsls .slide-meta-bottom{ margin-top: 8px; }
+#wsls /* Десктоп: по умолчанию подписи скрыты */
+.slide-meta-top, #wsls .slide-meta-bottom, #wsls .artist-name{
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 200ms ease;
+}
+#wsls /* Активный слайд: показываем подписи */
+.slide.meta-active .slide-meta-top, #wsls .slide.meta-active .slide-meta-bottom, #wsls .slide.meta-active .artist-name{
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+#wsls /* Artist name под изображением */
+.artist-name{
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: left;
+  width: 100%;
+  color: black;
+  display: block; /* гарантируем блочное отображение */
+}
+/* 🔧 Адаптация под мобильные */
+@media (max-width: 768px){
+  #wsls .slider-section {
+    --mobile-slide-width: 82vw; /* ширина первого слайда < 100vw для видимого превью второго */
+    --mobile-gap: 24px;         /* расстояние между слайдами и слева */
+    height: 100vh;              /* фиксированная высота экрана */
+    display: flex;
+    flex-direction: column;
+  }
+
+  #wsls .slider-overlay { display: none; }
+  #wsls .slider-heading { display: block; margin: 0 16px 32px 16px; font-size: 14px; }
+  #wsls .slider-all-link { display: inline-block; margin: 32px 16px 0 16px; font-size: 14px; text-decoration: none; }
+
+  #wsls .slider {
+    height: auto;
+    padding-left: 0; /* на мобильном не нужен отступ под колонку */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  #wsls .slider-track {
+    position: static;  /* позволяем треку занимать высоту по содержимому */
+    height: auto;
+  }
+
+  #wsls .slider-wrapper {
+    padding-left: var(--mobile-gap);  /* отступ слева = межслайдовому отступу */
+    padding-right: 0;                 /* справа оставляем превью второго слайда */
+    gap: 0; /* избегаем глюков gap при transform на iOS */
+    /* Разрешаем вертикальную прокрутку браузером, горизонталь обрабатываем жестом */
+    touch-action: pan-y;
+    align-items: flex-start;          /* контент прижат к верху */
+    height: auto;
+  }
+
+  #wsls .slide {
+    width: var(--mobile-slide_WIDTH);
+    height: auto;                     /* высота по содержимому */
+    border-radius: 0;
+    box-shadow: none;
+    margin-right: var(--mobile-gap);
+    background: transparent;          /* фон не нужен */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #wsls .slide img {
+    width: 100%;
+    height: auto;          /* сохраняем исходные пропорции, не обрезая изображение */
+    object-fit: contain;
+  }
+
+  /* последний слайд без правого отступа */
+  #wsls .slider-wrapper .slide:last-child {
+    margin-right: 0;
+  }
+
+  /* подписи к слайдам */
+  #wsls .slide-meta-top,
+  #wsls .slide-meta-bottom {
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: left;
+    width: 100%;
+  }
+
+  #wsls .slide-meta-top { margin-bottom: 8px; }
+  #wsls .slide-meta-bottom { margin-top: 8px; }
+
+  /* Artist name на мобильных */
+  #wsls .artist-name {
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: left;
+    width: 100%;
+    color: black;
+    display: block; /* гарантируем блочное отображение */
+  }
+
+  /* Мобильный — без изменений: подписи всегда видны */
+  #wsls .slide-meta-top,
+  #wsls .slide-meta-bottom,
+  #wsls .artist-name {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
