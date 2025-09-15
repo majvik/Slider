@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Webstudio Lenis Slider Embed</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/majvik/Slider@298e148/slider.css">
+</head>
+<body>
+<div id="wsls">
+  <div style="height: 100vh; background-color: red;"></div>
+<section class="slider-section">
+      <!-- Desktop overlay column -->
+      <div class="slider-overlay">
+        <div class="overlay-inner">
+          <div class="overlay-top">АРТИСТЫ</div>
+          <div class="overlay-center" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="2" viewBox="0 0 18 2" fill="none">
+              <g style="mix-blend-mode:difference">
+                <path d="M0 1L18 1" stroke="black"/>
+              </g>
+            </svg>
+          </div>
+          <a class="overlay-bottom" href="#">Все артисты</a>
+        </div>
+      </div>
+
+      <!-- Mobile heading above slider -->
+      <h3 class="slider-heading">АРТИСТЫ</h3>
+
+      <div class="slider">
+        <div class="slider-track">
+          <div class="slider-wrapper">
+          <div class="slide"><div class="slide-media"><img src="https://picsum.photos/seed/wsls1/480/640" alt="Artist 1"/></div><span class="artist-name">Artist name1</span></div>
+          <div class="slide"><div class="slide-media"><img src="https://picsum.photos/seed/wsls2/480/640" alt="Artist 2"/></div><span class="artist-name">Artist name2</span></div>
+          <div class="slide"><div class="slide-media"><img src="https://picsum.photos/seed/wsls3/480/640" alt="Artist 3"/></div><span class="artist-name">Artist name3</span></div>
+          <div class="slide"><div class="slide-media"><img src="https://picsum.photos/seed/wsls4/480/640" alt="Artist 4"/></div><span class="artist-name">Artist name4</span></div>
+          <div class="slide"><div class="slide-media"><img src="https://picsum.photos/seed/wsls5/480/640" alt="Artist 5"/></div><span class="artist-name">Artist name5</span></div>
+          <div class="slide"><div class="slide-media"><img src="https://picsum.photos/seed/wsls6/480/640" alt="Artist 6"/></div><span class="artist-name">Artist name6</span></div>
+          <div class="slide"><div class="slide-media"><img src="https://picsum.photos/seed/wsls7/480/640" alt="Artist 7"/></div><span class="artist-name">Artist name7</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile link below slider -->
+      <a class="slider-all-link" href="#">Все артисты</a>
+    </section>
+    <div style="height: 100vh; background-color: blue;"></div>
+</div>
+
+<!-- External deps (load before slider) -->
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1/bundled/lenis.min.js"></script>
+
+<!-- Slider script via jsDelivr pinned to new commit with fixes -->
+<script defer src="https://cdn.jsdelivr.net/gh/majvik/Slider@9c8da33/slider.js" crossorigin="anonymous" onerror="(function(){var f=document.createElement('script');f.defer=true;f.src='https://cdn.jsdelivr.net/gh/majvik/Slider@9c8da33/slider.js';document.body.appendChild(f);})();"></script>
+</body>
+</html>
